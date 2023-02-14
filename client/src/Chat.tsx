@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { useDispatch, useSelector } from 'react-redux';
+import { addMessage } from './store';
 
 interface ChatProps {
   socket: any;
@@ -9,10 +10,8 @@ interface ChatProps {
 }
 function Chat({ socket, username, room }: ChatProps) {
   const dispatch = useDispatch();
+  const messages = useSelector((state: any) => state.chats.messages);
   const [currentMessage, setCurrentMessage] = useState('');
-  const [messageList, setMessageList] = useState<
-    { room: any; author: any; message: any; time: any }[]
-  >([]);
 
   const sendMessage = async () => {
     if (currentMessage !== '') {
@@ -27,14 +26,14 @@ function Chat({ socket, username, room }: ChatProps) {
       };
 
       await socket.emit('send_message', messageData);
-      setMessageList((list) => [...list, messageData]);
+      dispatch(addMessage(messageData));
       setCurrentMessage('');
     }
   };
 
   useEffect(() => {
     socket.on('receive_message', (data: any) => {
-      setMessageList((list) => [...list, data]);
+      dispatch(addMessage(data));
     });
   }, [socket]);
 
@@ -45,7 +44,7 @@ function Chat({ socket, username, room }: ChatProps) {
       </div>
       <div className='chat-body'>
         <ScrollToBottom className='message-container'>
-          {messageList.map((messageContent, i) => {
+          {messages.map((messageContent: any, i: number) => {
             return (
               <div
                 className='message'
