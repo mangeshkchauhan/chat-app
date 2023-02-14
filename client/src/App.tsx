@@ -6,7 +6,7 @@ import { store } from './store';
 import { Provider } from 'react-redux';
 import { Header } from './stories/Header';
 
-const socket = io('http://localhost:3001');
+const socket = io('https://chat-app-uptut.onrender.com/');
 
 function App() {
   const [username, setUsername] = useState('');
