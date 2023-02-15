@@ -8,15 +8,9 @@ app.use(cors());
 
 const server = http.createServer(app);
 
-const io = new Server(httpServer, {
+const io = new Server(server, {
   cors: {
-    origin: [
-      'https://chat-app-kohl-three.vercel.app',
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://chat-app-mangeshkchauhan.vercel.app',
-      'https://chat-app-git-master-mangeshkchauhan.vercel.app',
-    ],
+    origin: *,
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
   },
