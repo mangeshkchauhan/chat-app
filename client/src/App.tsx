@@ -6,7 +6,11 @@ import { store } from './store';
 import { Provider } from 'react-redux';
 import { Header } from './stories/Header';
 
-const socket = io('https://chat-app-uptut.onrender.com');
+const socket = io('https://chat-app-uptut.onrender.com', {
+  extraHeaders: {
+    'my-custom-header': 'abcd',
+  },
+});
 
 function App() {
   const [username, setUsername] = useState('');
